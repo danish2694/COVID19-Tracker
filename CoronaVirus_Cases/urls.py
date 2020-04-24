@@ -19,6 +19,7 @@ from App import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('test',views.test,name='test'),
     path('',views.index,name='index'),
     path('worlddata/',views.worlddata,name='worlddata'),
     path('map/<str:m>',views.map,name='map'),

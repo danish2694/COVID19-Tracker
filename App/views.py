@@ -4,6 +4,8 @@ from django.http import HttpResponseRedirect
 from App import worldData,indiaData
 from django.http import JsonResponse
 
+def test(request):
+	return HttpResponse("Hello")
 
 def index(request):
 	return HttpResponseRedirect('/map/india')

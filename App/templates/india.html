@@ -1,0 +1,121 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %} CoronaVirus Tracker {% endblock %}
+{% block head %}
+<head>    
+    <script src="{% static 'js/india.js' %}">        
+    </script>
+    <style>html, body,.container,.row, #body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+    <style>
+        #map_8ba0e74af287495b866334ad89d96395 {
+            position: relative;
+            width: 100.0%;
+            height: 100.0%;
+            left: 0.0%;
+            top: 0.0%;
+            }
+        </style>
+    <style>
+        .my-custom-scrollbar {
+        position: relative;
+        height: 200px;
+        overflow: auto;
+        }
+        .table-wrapper-scroll-y {
+        display: block;
+        }
+    </style>
+</head>
+{% endblock %}
+{% block body %} 
+<body>  
+    <div class="container mt-2">  
+    <div class="row">
+        <div class="col-8" id="body">
+            <div class="folium-map" id="map_8ba0e74af287495b866334ad89d96395" ></div>
+        </div>
+            
+    <div class="col-4 pl-5">
+        <div class="col-md-12 pl-5">
+
+        <h3 class="text-center text-info">Indian statistics</h3>
+
+        <div class="container d-flex justify-content-center">
+            <table class="table text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="text-danger">Total</th>
+                    <th scope="col" class="text-primary">Active</th>
+                    <th scope="col" class="text-success">Recovered</th>
+                    <th scope="col" class="text-secondary">Deceased</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><span class="text-danger font-weight-bold">{{totalConfirmed}}</span></td>
+                    <td><span class="text-info font-weight-bold">{{totalActive}}</span></td>
+                    <td><span class="text-success font-weight-bold">{{totalRecovered}}</span></td>
+                    <td><span class="text-secondary font-weight-bold">{{totalDead}}</span></td>
+                </tr>
+                
+                </tbody>
+            </table>
+        </div>
+    <div class="container"><hr></div>
+        <h5 class="text-center text-info">Situation of Your State: <span class="fond-bold text-dark">UP</span></h5>
+        <div class="container d-flex justify-content-center w-25">
+            <table class="table text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="text-primary">Active</th>
+                    <th scope="col" class="text-success">Recovered</th>
+                    <th scope="col" class="text-secondary">Deceased</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1154</td>
+                    <td>162</td>
+                    <td>21</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        <div class="container"><hr></div>
+        <h3 class="text-center text-warning">Statewise Statistics</h3>
+
+        <div class="container d-flex justify-content-center" style="width: 450px; margin-left: -100px;">
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table-responsive table-bordered table-striped text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="text-dark">State</th>
+                    <th scope="col" class="text-danger">Confirmed</th>
+                    <th scope="col" class="text-primary">Active</th>
+                    <th scope="col" class="text-success">Recovered</th>
+                    <th scope="col" class="text-secondary">Deceased</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i in stateCases %}
+                    <tr>
+                    {% for j in i %}
+                        <td>{{j}}</td>
+                    {% endfor %}
+                    </tr>
+                    {% endfor %}    
+                    </tbody>
+            </table>
+        </div>
+        </div>
+    </div>    
+    </div>      
+    </div>
+</div>
+ 
+</body>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %} CoronaVirus Tracker {% endblock %}
+{% block head %}
+<head>    
+    <script src="{% static 'js/world.js' %}">        
+    </script>
+    <style>html, body,.container,.row, #body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+    <meta name="viewport" content="width=device-width,
+        initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <style>
+        #map_8ba0e74af287495b866334ad89d96395 {
+            position: relative;
+            width: 100.0%;
+            height: 100.0%;
+            left: 0.0%;
+            top: 0.0%;
+        }
+
+    </style>
+</head>
+{% endblock %}
+{% block body %} 
+<body>
+<div class="container mt-2">  
+    <div class="row">
+        <div class="col-8" id="body">
+            <div class="folium-map" id="map_8ba0e74af287495b866334ad89d96395" ></div>
+        </div>
+    <div class="col-4 pl-5 mt-3">
+        <h3 class="text-center text-info mb-3">World Statistics</h3>
+            <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+              <div class="card-header ml-3"><h2 class="text-secondary">Total Cases</h2>
+              <div class="card-body">
+                <h5 class="card-title"><span class="text-danger font-weight-bold">{{total}}</span></h5>
+            </div>
+            </div>
+            </div>
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+          <div class="card-header ml-3"><h2 class="text-secondary">Total Dead</h2>
+          <div class="card-body">
+            <h5 class="card-title"><span class="text-info font-weight-bold">{{dead}}</span></h5>
+            </div>
+          </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header ml-3"><h2 class="text-secondary">Recovered</h2>
+            <div class="card-body">
+                <h5 class="card-title"><span class="text-success font-weight-bold">{{recover}}</span></h5>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+
+{% endblock %}

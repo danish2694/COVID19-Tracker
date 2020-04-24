@@ -4,7 +4,7 @@ def data():
 	url = 'https://www.worldometers.info/coronavirus/'
 
 	r = requests.get(url)
-	soup = BeautifulSoup(r.content, 'html.parser')
+	soup = BeautifulSoup(r.content, 'html5lib')
 
 	countryData = {}
 

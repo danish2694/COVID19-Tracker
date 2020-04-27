@@ -1,1 +1,1 @@
-web: gunicorn CoronaVirus_Cases.wsgi --log-file -
+web: gunicorn CoronaVirus_Cases.wsgi

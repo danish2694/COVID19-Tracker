@@ -23,7 +23,7 @@ function updateWorldMap(){
         jdata = json['country'];
         });
 
-   fetch("http://127.0.0.1:8000/worlddata/")
+   fetch("https://covid19-records.herokuapp.com/worlddata/")
         .then(response => response.json())
         .then(rsp => {
             data = rsp['cases']

@@ -1,0 +1,42 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %} CoronaVirus Tracker {% endblock %}
+{% block head %}
+<head>
+	<title></title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+{% endblock %}
+{% block body %}
+<body>
+	<div class="container mt-2 w-75">
+		<div class="col-md-12 pl-5">
+			<div class="container my-3">
+				<h3 class="text-center text-dark">World Cases Statistic</h3>
+				<canvas id="bar-chart" width="800" height="450"></canvas>
+			</div>
+			<div class="container"><hr></div>
+			<div class="container my-3">
+				<h3 class="text-center text-dark">India Cases Statistic</h3>
+				<canvas id="line-chart" width="800" height="450"></canvas>
+			</div>
+			<div class="container"><hr></div>
+			<div class="container my-3">
+				<h3 class="text-center text-dark">India Active Cases Statistic</h3>
+				<canvas id="line-chart3" width="800" height="450"></canvas>
+			</div>
+			<div class="container"><hr></div>
+			<div class="container my-3">
+				<h3 class="text-center text-dark">India Recovered Cases Statistic</h3>
+				<canvas id="line-chart2" width="800" height="450"></canvas>
+			</div>
+			<div class="container"><hr></div>
+			<div class="container my-3">
+				<h3 class="text-center text-dark">India Death Cases Statistic</h3>
+				<canvas id="line-chart4" width="800" height="450"></canvas>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="{% static 'js/graphOne.js' %}"></script>
+{% endblock %}

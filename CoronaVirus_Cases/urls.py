@@ -19,13 +19,13 @@ from App import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('test/',views.test,name='test'),
+    # path('test/',views.test,name='test'),
     path('',views.index,name='index'),
     path('worlddata/',views.worlddata,name='worlddata'),
-    path('map/<str:m>',views.map,name='map'),
-    path('graphOne/',views.graphOne,name='graphOne'),
-    path('allgraphs/',views.allgraphs,name='allgraphs'),
-    path('graph/',views.graph,name='graph'),
+    # path('map/<str:m>',views.map,name='map'),
+    # path('graphOne/',views.graphOne,name='graphOne'),
+    # path('allgraphs/',views.allgraphs,name='allgraphs'),
+    # path('graph/',views.graph,name='graph'),
     # path('globe/',views.globe,name='globe'),
     path('globe_data/',views.globe_data,name='globe_data'),
 

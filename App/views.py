@@ -5,14 +5,10 @@ from App import worldData,indiaData
 from django.http import JsonResponse
 import requests,json
 
-def test(request):
-	return render(request,'index.html')
+# def test(request):
+# 	return render(request,'index.html')
 
 def index(request):
-	return render(request,'globe.html')
-	# return HttpResponseRedirect('/map/india')
-
-def map(request,m):
 	covidCases = worldData.data()
 	data = covidCases['cases']
 	worldList = ['country','totalCases','deaths','recovered']
@@ -22,36 +18,52 @@ def map(request,m):
 		cases.append(k)
 		# print(len(cases))
 	worldCases = cases[4]
-	
-	if m == 'india':
-		indiaList = ['state','confirmed','active','recovered','deaths']
-		cases1 = []
-		indCases =indiaData.data()
-		for p in indCases:
-			r = [p[q] for q in indiaList if q in p]
-			cases1.append(r)
+	params = {"cases":cases[4:217],"total":worldCases[1],"dead":worldCases[2],
+	    "recover":worldCases[3]}
 
-		totalCases = cases1[0]
-		totalConfirmed = totalCases[1]
-		totalActive = totalCases[2]
-		totalRecovered = totalCases[3]
-		totalDead = totalCases[4]
-		stateCases = cases1[1:]
-	    # print(indiaCases)
-		params = {"cases":cases[4:217],"total":worldCases[1],"dead":worldCases[2],
-	    "recover":worldCases[3],"stateCases":stateCases,"totalCases":totalCases,
-	    "totalConfirmed":totalConfirmed,"totalActive":totalActive,"totalRecovered":totalRecovered,
-	    "totalDead":totalDead}
-		return render(request,'india.html',params)
+	return render(request,'globe.html',params)
+	# return HttpResponseRedirect('/map/india')
+
+# def map(request,m):
+# 	covidCases = worldData.data()
+# 	data = covidCases['cases']
+# 	worldList = ['country','totalCases','deaths','recovered']
+# 	cases = []
+# 	for j in data:
+# 		k = [j[i] for i in worldList if i in j]
+# 		cases.append(k)
+# 		# print(len(cases))
+# 	worldCases = cases[4]
 	
-	elif m == 'world':
-		indCases =indiaData.data()
+# 	if m == 'india':
+# 		indiaList = ['state','confirmed','active','recovered','deaths']
+# 		cases1 = []
+# 		indCases =indiaData.data()
+# 		for p in indCases:
+# 			r = [p[q] for q in indiaList if q in p]
+# 			cases1.append(r)
+
+# 		totalCases = cases1[0]
+# 		totalConfirmed = totalCases[1]
+# 		totalActive = totalCases[2]
+# 		totalRecovered = totalCases[3]
+# 		totalDead = totalCases[4]
+# 		stateCases = cases1[1:]
+# 	    # print(indiaCases)
+# 		params = {"cases":cases[4:217],"total":worldCases[1],"dead":worldCases[2],
+# 	    "recover":worldCases[3],"stateCases":stateCases,"totalCases":totalCases,
+# 	    "totalConfirmed":totalConfirmed,"totalActive":totalActive,"totalRecovered":totalRecovered,
+# 	    "totalDead":totalDead}
+# 		return render(request,'india.html',params)
+	
+# 	elif m == 'world':
+# 		indCases =indiaData.data()
 		
-		params = {"cases":cases[4:217],"total":worldCases[1],"dead":worldCases[2],"recover":worldCases[3]}
+# 		params = {"cases":cases[4:217],"total":worldCases[1],"dead":worldCases[2],"recover":worldCases[3]}
 
-		return render(request,'worldmap.html',params)
-	else:
-		return HttpResponseRedirect('/')
+# 		return render(request,'worldmap.html',params)
+# 	else:
+# 		return HttpResponseRedirect('/')
 	# return render(request,"map.html")
 
 def worlddata(request):
@@ -61,64 +73,64 @@ def worlddata(request):
 	# print(covidCases)
 	return HttpResponse(response)
 
-def graphOne(request):
-	global result
-	'''url = "https://corona-virus-world-and-india-data.p.rapidapi.com/api"
-				headers = {
-				    'x-rapidapi-host': "corona-virus-world-and-india-data.p.rapidapi.com",
-				    'x-rapidapi-key': "8a535ee783mshca57265aad44eb9p18617fjsnce3f1f61eb7c"
-				    }
-				response = requests.request("GET", url, headers=headers)
-				x = response.json()
-				data = x["countries_stat"]
-				worldList = ['country_name','cases','deaths','total_recovered','total_tests']
-				countries = []; cases = []; deaths = []; total_recovered = []; total_tests = []
-				for i in data:
-					countries.append(i['country_name'])
-					cases.append(i['cases'])
-					deaths.append(i['deaths'])
-					total_recovered.append(i['total_recovered'])
-					total_tests.append(i['total_tests'])
-				params = {"countries":countries,"cases":cases}
-				result = json.dumps(params)'''
-	countries =  ["USA", "Spain", "Italy", "France", "Germany", "UK", "Turkey", "Iran", "China", "Russia", "Brazil", "Belgium", "Canada", "Netherlands", "Switzerland", "Portugal", "India", "Peru", "Sweden", "Ireland", "Austria", "Israel", "Saudi Arabia", "Japan", "Chile", "Singapore", "Ecuador", "S. Korea", "Mexico", "Pakistan", "Poland", "Romania", "UAE", "Denmark", "Indonesia", "Qatar", "Norway", "Belarus", "Ukraine", "Czechia", "Serbia", "Philippines", "Australia", "Malaysia", "Dominican Republic", "Panama", "Colombia", "Finland", "Bangladesh", "Egypt", "Luxembourg", "South Africa", "Morocco", "Argentina", "Algeria", "Thailand", "Moldova", "Greece", "Kuwait", "Hungary", "Kazakhstan", "Bahrain", "Croatia", "Iceland", "Oman", "Uzbekistan", "Iraq", "Estonia", "Azerbaijan", "Armenia", "New Zealand", "Bosnia and Herzegovina", "Lithuania", "Slovenia", "Slovakia", "North Macedonia", "Afghanistan", "Cuba", "Cameroon", "Ghana", "Bulgaria", "Hong Kong", "Djibouti", "Ivory Coast", "Tunisia", "Nigeria", "Cyprus", "Latvia", "Guinea", "Andorra", "", "Diamond Princess", "Lebanon", "Costa Rica", "Bolivia", "Albania", "Niger", "Kyrgyzstan", "Burkina Faso", "Uruguay", "Honduras", "Channel Islands", "San Marino", "Palestine", "Senegal", "Malta", "Jordan", "Taiwan", "Georgia", "R\u00e9union", "DRC", "Guatemala", "Sri Lanka", "Mauritius", "Mayotte", "Montenegro", "Isle of Man", "Kenya", "Venezuela", "Mali", "Somalia", "Tanzania", "Vietnam", "Jamaica", "El Salvador", "Paraguay", "Faeroe Islands", "Congo", "Gabon", "Martinique", "Sudan", "Rwanda", "Guadeloupe", "Brunei", "Gibraltar", "Myanmar", "Cambodia", "Madagascar", "Ethiopia", "Trinidad and Tobago", "French Guiana", "Liberia", "Aruba", "Bermuda", "Monaco", "Maldives", "Togo", "Equatorial Guinea", "Cabo Verde", "Liechtenstein", "Barbados", "Zambia", "Sint Maarten", "Bahamas", "Guyana", "Cayman Islands", "Uganda", "Haiti", "Sierra Leone", "Libya", "French Polynesia", "Benin", "Guinea-Bissau", "Nepal", "Macao", "Syria", "Mozambique", "Eritrea", "Saint Martin", "Mongolia", "Malawi", "Chad", "Eswatini", "Zimbabwe", "Angola", "Antigua and Barbuda", "Timor-Leste", "Botswana", "Laos", "Belize", "Fiji", "New Caledonia", "Dominica", "Namibia", "Grenada", "Saint Lucia", "Saint Kitts and Nevis", "Cura\u00e7ao", "CAR", "St. Vincent Grenadines", "Falkland Islands", "Turks and Caicos", "Greenland", "Montserrat", "Seychelles", "Burundi", "Nicaragua", "Gambia", "Suriname", "Vatican City", "MS Zaandam", "Papua New Guinea", "Bhutan", "Mauritania", "St. Barth", "Western Sahara", "British Virgin Islands", "Caribbean Netherlands", "Sao Tome and Principe", "South Sudan", "Anguilla", "Saint Pierre Miquelon", "Yemen"]
-	cases =  ["851193", "213024", "187327", "159877", "151175", "138078", "98674", "87026", "82798", "62773", "46348", "42797", "40190", "35729", "28496", "22353", "21797", "19250", "16755", "16671", "15002", "14592", "13930", "11950", "11296", "11178", "10850", "10811", "10702", "10544", "10346", "10096", "8756", "8073", "8022", "7775", "7764", "7361", "7276", "7170", "7136", "6981", "6661", "5603", "5300", "4992", "4356", "4284", "4186", "3659", "3654", "3635", "3537", "3288", "2926", "2910", "2839", "2408", "2399", "2284", "2251", "2098", "1981", "1789", "1735", "1716", "1631", "1592", "1548", "1523", "1451", "1413", "1398", "1366", "1325", "1300", "1279", "1189", "1163", "1154", "1097", "1036", "986", "952", "909", "873", "790", "778", "761", "723", "721", "712", "688", "681", "672", "663", "662", "631", "609", "549", "519", "519", "501", "480", "479", "445", "435", "427", "420", "410", "377", "342", "337", "329", "326", "320", "316", "307", "298", "293", "286", "284", "268", "252", "250", "213", "187", "186", "166", "164", "162", "153", "148", "138", "132", "132", "122", "121", "116", "115", "107", "101", "100", "99", "94", "94", "88", "84", "82", "81", "76", "74", "73", "70", "67", "66", "63", "62", "61", "60", "57", "54", "50", "47", "45", "42", "41", "39", "38", "35", "33", "33", "31", "28", "25", "24", "23", "22", "19", "18", "18", "18", "16", "16", "15", "15", "15", "14", "14", "13", "12", "11", "11", "11", "11", "11", "10", "10", "10", "9", "9", "8", "7", "7", "6", "6", "5", "5", "4", "4", "3", "1", "1"]
-	td = [int(b) for b in cases]
-	result = {"countries": countries[:10],"cases":td[:10]}
-	return HttpResponse(json.dumps(result))
+# def graphOne(request):
+# 	global result
+# 	'''url = "https://corona-virus-world-and-india-data.p.rapidapi.com/api"
+# 				headers = {
+# 				    'x-rapidapi-host': "corona-virus-world-and-india-data.p.rapidapi.com",
+# 				    'x-rapidapi-key': "8a535ee783mshca57265aad44eb9p18617fjsnce3f1f61eb7c"
+# 				    }
+# 				response = requests.request("GET", url, headers=headers)
+# 				x = response.json()
+# 				data = x["countries_stat"]
+# 				worldList = ['country_name','cases','deaths','total_recovered','total_tests']
+# 				countries = []; cases = []; deaths = []; total_recovered = []; total_tests = []
+# 				for i in data:
+# 					countries.append(i['country_name'])
+# 					cases.append(i['cases'])
+# 					deaths.append(i['deaths'])
+# 					total_recovered.append(i['total_recovered'])
+# 					total_tests.append(i['total_tests'])
+# 				params = {"countries":countries,"cases":cases}
+# 				result = json.dumps(params)'''
+# 	countries =  ["USA", "Spain", "Italy", "France", "Germany", "UK", "Turkey", "Iran", "China", "Russia", "Brazil", "Belgium", "Canada", "Netherlands", "Switzerland", "Portugal", "India", "Peru", "Sweden", "Ireland", "Austria", "Israel", "Saudi Arabia", "Japan", "Chile", "Singapore", "Ecuador", "S. Korea", "Mexico", "Pakistan", "Poland", "Romania", "UAE", "Denmark", "Indonesia", "Qatar", "Norway", "Belarus", "Ukraine", "Czechia", "Serbia", "Philippines", "Australia", "Malaysia", "Dominican Republic", "Panama", "Colombia", "Finland", "Bangladesh", "Egypt", "Luxembourg", "South Africa", "Morocco", "Argentina", "Algeria", "Thailand", "Moldova", "Greece", "Kuwait", "Hungary", "Kazakhstan", "Bahrain", "Croatia", "Iceland", "Oman", "Uzbekistan", "Iraq", "Estonia", "Azerbaijan", "Armenia", "New Zealand", "Bosnia and Herzegovina", "Lithuania", "Slovenia", "Slovakia", "North Macedonia", "Afghanistan", "Cuba", "Cameroon", "Ghana", "Bulgaria", "Hong Kong", "Djibouti", "Ivory Coast", "Tunisia", "Nigeria", "Cyprus", "Latvia", "Guinea", "Andorra", "", "Diamond Princess", "Lebanon", "Costa Rica", "Bolivia", "Albania", "Niger", "Kyrgyzstan", "Burkina Faso", "Uruguay", "Honduras", "Channel Islands", "San Marino", "Palestine", "Senegal", "Malta", "Jordan", "Taiwan", "Georgia", "R\u00e9union", "DRC", "Guatemala", "Sri Lanka", "Mauritius", "Mayotte", "Montenegro", "Isle of Man", "Kenya", "Venezuela", "Mali", "Somalia", "Tanzania", "Vietnam", "Jamaica", "El Salvador", "Paraguay", "Faeroe Islands", "Congo", "Gabon", "Martinique", "Sudan", "Rwanda", "Guadeloupe", "Brunei", "Gibraltar", "Myanmar", "Cambodia", "Madagascar", "Ethiopia", "Trinidad and Tobago", "French Guiana", "Liberia", "Aruba", "Bermuda", "Monaco", "Maldives", "Togo", "Equatorial Guinea", "Cabo Verde", "Liechtenstein", "Barbados", "Zambia", "Sint Maarten", "Bahamas", "Guyana", "Cayman Islands", "Uganda", "Haiti", "Sierra Leone", "Libya", "French Polynesia", "Benin", "Guinea-Bissau", "Nepal", "Macao", "Syria", "Mozambique", "Eritrea", "Saint Martin", "Mongolia", "Malawi", "Chad", "Eswatini", "Zimbabwe", "Angola", "Antigua and Barbuda", "Timor-Leste", "Botswana", "Laos", "Belize", "Fiji", "New Caledonia", "Dominica", "Namibia", "Grenada", "Saint Lucia", "Saint Kitts and Nevis", "Cura\u00e7ao", "CAR", "St. Vincent Grenadines", "Falkland Islands", "Turks and Caicos", "Greenland", "Montserrat", "Seychelles", "Burundi", "Nicaragua", "Gambia", "Suriname", "Vatican City", "MS Zaandam", "Papua New Guinea", "Bhutan", "Mauritania", "St. Barth", "Western Sahara", "British Virgin Islands", "Caribbean Netherlands", "Sao Tome and Principe", "South Sudan", "Anguilla", "Saint Pierre Miquelon", "Yemen"]
+# 	cases =  ["851193", "213024", "187327", "159877", "151175", "138078", "98674", "87026", "82798", "62773", "46348", "42797", "40190", "35729", "28496", "22353", "21797", "19250", "16755", "16671", "15002", "14592", "13930", "11950", "11296", "11178", "10850", "10811", "10702", "10544", "10346", "10096", "8756", "8073", "8022", "7775", "7764", "7361", "7276", "7170", "7136", "6981", "6661", "5603", "5300", "4992", "4356", "4284", "4186", "3659", "3654", "3635", "3537", "3288", "2926", "2910", "2839", "2408", "2399", "2284", "2251", "2098", "1981", "1789", "1735", "1716", "1631", "1592", "1548", "1523", "1451", "1413", "1398", "1366", "1325", "1300", "1279", "1189", "1163", "1154", "1097", "1036", "986", "952", "909", "873", "790", "778", "761", "723", "721", "712", "688", "681", "672", "663", "662", "631", "609", "549", "519", "519", "501", "480", "479", "445", "435", "427", "420", "410", "377", "342", "337", "329", "326", "320", "316", "307", "298", "293", "286", "284", "268", "252", "250", "213", "187", "186", "166", "164", "162", "153", "148", "138", "132", "132", "122", "121", "116", "115", "107", "101", "100", "99", "94", "94", "88", "84", "82", "81", "76", "74", "73", "70", "67", "66", "63", "62", "61", "60", "57", "54", "50", "47", "45", "42", "41", "39", "38", "35", "33", "33", "31", "28", "25", "24", "23", "22", "19", "18", "18", "18", "16", "16", "15", "15", "15", "14", "14", "13", "12", "11", "11", "11", "11", "11", "10", "10", "10", "9", "9", "8", "7", "7", "6", "6", "5", "5", "4", "4", "3", "1", "1"]
+# 	td = [int(b) for b in cases]
+# 	result = {"countries": countries[:10],"cases":td[:10]}
+# 	return HttpResponse(json.dumps(result))
 
-def allgraphs(request):
-	url = "https://corona-virus-world-and-india-data.p.rapidapi.com/api_india"
-	headers = {
-	    'x-rapidapi-host': "corona-virus-world-and-india-data.p.rapidapi.com",
-	    'x-rapidapi-key': "8a535ee783mshca57265aad44eb9p18617fjsnce3f1f61eb7c"
-	    }
+# def allgraphs(request):
+# 	url = "https://corona-virus-world-and-india-data.p.rapidapi.com/api_india"
+# 	headers = {
+# 	    'x-rapidapi-host': "corona-virus-world-and-india-data.p.rapidapi.com",
+# 	    'x-rapidapi-key': "8a535ee783mshca57265aad44eb9p18617fjsnce3f1f61eb7c"
+# 	    }
 
-	response = requests.request("GET", url, headers=headers)
-	x = response.json()
-	y = x['state_wise']
-	state = []; confirmed = []; active = []; recovered = []; dead = [];
-	for i in y.values():
-	    stateName = i['state']
-	    confirmedCases = i['confirmed']
-	    activeCases = i['active']
-	    recoveredCases = i['recovered']
-	    deathCases = i['deaths']
-	    state.append(stateName)
-	    confirmed.append(confirmedCases)
-	    active.append(activeCases)
-	    recovered.append(recoveredCases)
-	    dead.append(deathCases)
-	td1 = [int(b) for b in confirmed]
-	td2 = [int(b) for b in active]
-	td3 = [int(b) for b in recovered]
-	td4 = [int(b) for b in dead]
-	params = {"states":state,"confirmedCases":td1,"activeCases":td2,"recoveredCases":td3,"deathCases":td4}
-	result = json.dumps(params)
-	return HttpResponse(result)
+# 	response = requests.request("GET", url, headers=headers)
+# 	x = response.json()
+# 	y = x['state_wise']
+# 	state = []; confirmed = []; active = []; recovered = []; dead = [];
+# 	for i in y.values():
+# 	    stateName = i['state']
+# 	    confirmedCases = i['confirmed']
+# 	    activeCases = i['active']
+# 	    recoveredCases = i['recovered']
+# 	    deathCases = i['deaths']
+# 	    state.append(stateName)
+# 	    confirmed.append(confirmedCases)
+# 	    active.append(activeCases)
+# 	    recovered.append(recoveredCases)
+# 	    dead.append(deathCases)
+# 	td1 = [int(b) for b in confirmed]
+# 	td2 = [int(b) for b in active]
+# 	td3 = [int(b) for b in recovered]
+# 	td4 = [int(b) for b in dead]
+# 	params = {"states":state,"confirmedCases":td1,"activeCases":td2,"recoveredCases":td3,"deathCases":td4}
+# 	result = json.dumps(params)
+# 	return HttpResponse(result)
 
-def graph(request):
-	return render(request,"graphs.html")
+# def graph(request):
+# 	return render(request,"graphs.html")
 
 def Sort(allData): 
     allData.sort(key = lambda i: i["country"]) 

@@ -1,6 +1,6 @@
 // fetch("http://127.0.0.1:8000/globe_data/")
 // fetch("http://192.168.43.204:8000/globe_data")
-fetch("https://covid19-records.herokuapp.com/")
+fetch("https://covid19-records.herokuapp.com/globe_data")
         .then(response => response.json())
         .then(rsp => {
 am4core.ready(function() {

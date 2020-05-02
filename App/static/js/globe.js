@@ -1,6 +1,6 @@
 // fetch("http://127.0.0.1:8000/globe_data/")
-// fetch("http://192.168.43.204:8000/globe_data")
-fetch("https://covid19-records.herokuapp.com/globe_data")
+fetch("http://192.168.43.204:8000/globe_data")
+// fetch("https://covid19-records.herokuapp.com/globe_data")
         .then(response => response.json())
         .then(rsp => {
 am4core.ready(function() {
@@ -30,7 +30,7 @@ am4core.ready(function() {
     label.fontSize = 12;
     label.align = "left";
     label.valign = "bottom"
-    label.fill = am4core.color("red");
+    label.fill = am4core.color("white");
     label.background = new am4core.RoundedRectangle()
     label.background.cornerRadius(10,10,10,10);
     label.padding(10,10,10,10);
@@ -148,9 +148,9 @@ am4core.ready(function() {
     
     
     var measelsSeries = chart.series.push(new am4maps.MapPolygonSeries())
-    measelsSeries.tooltip.background.fillOpacity = 0;
+    measelsSeries.tooltip.background.fillOpacity = 1;
     measelsSeries.tooltip.background.cornerRadius = 20;
-    measelsSeries.tooltip.autoTextColor = false;
+    measelsSeries.tooltip.autoTextColor = true;
     measelsSeries.tooltip.label.fill = am4core.color("#000");
     measelsSeries.tooltip.dy = -5;
     
@@ -176,7 +176,7 @@ am4core.ready(function() {
         if (count > 0) {
           var polygon = measelsSeries.mapPolygons.create();
           polygon.multiPolygon = am4maps.getCircle(mapPolygon.visualLongitude, mapPolygon.visualLatitude, Math.max(0.2, Math.log(count) * Math.LN10 / 10));
-          polygon.tooltipText = mapPolygon.dataItem.dataContext.name + "\n" +"Confirmed : " + count+"\n"+ "Active : " + count2+"\n"+ "Recovered : " + count4+"\n"+ "Deaths : " + count3;
+          polygon.tooltipText = mapPolygon.dataItem.dataContext.name + "\n" +"Confirmed : " + count+"\n"+ "Active : " + count2+"\n"+ "Recovered : " + count4+"\n"+ "Dead : " + count3;
           mapPolygon.dummyData = polygon;
           polygon.events.on("over", function () {
             mapPolygon.isHover = true;

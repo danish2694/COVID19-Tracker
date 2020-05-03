@@ -4,11 +4,21 @@ from django.http import HttpResponseRedirect
 from App import worldData,indiaData
 from django.http import JsonResponse
 import requests,json
+import random
 
 # def test(request):
 # 	return render(request,'index.html')
 
 def index(request):
+	# request.session['is_logged'] = random.choice([i for i in range(1000000)])
+	# if request.session.has_key('is_logged'):
+	# 	print(request.session['is_logged'])
+	# else:
+	# 	r = requests.get('https://ipinfo.io/')
+	# 	data = r.json()
+	# 	ip = data['ip']
+	# 	state = data['region']
+
 	covidCases = worldData.data()
 	data = covidCases['cases']
 	worldList = ['country','totalCases','deaths','recovered']
